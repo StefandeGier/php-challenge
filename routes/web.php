@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'groupController@index');
+
+Route::get('/group/create', 'groupController@create');
+
+Route::post('/group', 'groupController@store');
+
+Route::get('/group/edit', 'groupController@edit');
