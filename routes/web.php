@@ -13,8 +13,14 @@
 
 Route::get('/', 'groupController@index');
 
+Route::get('/group/show/{id}', 'groupController@show');
+
 Route::get('/group/create', 'groupController@create');
 
-Route::post('/group', 'groupController@store');
+Route::post('/group/store', 'groupController@store');
 
-Route::get('/group/edit', 'groupController@edit');
+Route::get('/group/delete/{id}', 'groupController@destroy');
+
+Route::get('/group/edit/{id}', 'groupController@edit');
+
+Route::put('/group/update/{id}', 'groupController@update');

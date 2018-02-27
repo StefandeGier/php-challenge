@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-
+use Illuminate\Http\Request;
+use Session;
 
 class groupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
@@ -20,71 +16,76 @@ class groupController extends Controller
         return view('index', compact('groups'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
         return view('group/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
+
+    public function store(Request $request)
     {
-        dd(request()->all());
+
+      $this->validate($request, [
+        'title' => 'required'
+      ]);
+
+      $input = $request->all();
+
+      Group::create($input);
+
+      Session::flash('flash_message', 'Task successfully added!');
+
+      return redirect('/');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+      $group = Group::findOrFail($id);
+
+      return view('group/show')->withGroup($group);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit() // hier hoort een $id te staan
+
+    public function edit($id) // hier hoort een $id te staan
     {
-        //
-        return view('group/edit');
+        $group = Group::findOrFail($id);
+
+        return view('group/edit')->withGroup($group);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+
+      $group = Group::findOrFail($id);
+
+      $this->validate($request, [
+          'title' => 'required'
+      ]);
+
+      $input = $request->all();
+
+      $group->fill($input)->save();
+
+      Session::flash('flash_message_update', 'Group successfully updated!');
+
+      return redirect('/');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
-        //
+
+      $group = Group::findOrFail($id);
+
+      $group->delete();
+
+      Session::flash('flash_message_delete', 'Group successfully deleted!');
+
+      return redirect('/');
     }
 }
