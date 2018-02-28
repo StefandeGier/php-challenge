@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Tasks;
 use Illuminate\Http\Request;
 use Session;
 
@@ -44,8 +45,9 @@ class groupController extends Controller
     public function show($id)
     {
       $group = Group::findOrFail($id);
-
-      return view('group/show')->withGroup($group);
+      $tasks = Tasks::where('group_id', $id)->get();
+      //return view('group/show')->withGroup($group,$tasks);
+      return view('group/show',compact('tasks','group'));
 
     }
 
@@ -76,12 +78,15 @@ class groupController extends Controller
       return redirect('/');
     }
 
-  
+
     public function destroy($id)
     {
 
       $group = Group::findOrFail($id);
 
+      $task = Tasks::where('group_id', $id);
+
+      $task->delete();
       $group->delete();
 
       Session::flash('flash_message_delete', 'Group successfully deleted!');

@@ -36,6 +36,8 @@
 
     @foreach ($groups as $group)
       <h2><a href="{{ URL::to('group/show/' . $group->id) }}">{{$group->title}}</a></h2>
+      <a href="{{ URL::to('group/delete/' . $group->id) }}">delete</a>
+      <a href="{{ URL::to('group/edit/' . $group->id) }}">edit</a>
     @endforeach
 
   </body>

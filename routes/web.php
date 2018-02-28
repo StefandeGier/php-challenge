@@ -24,3 +24,8 @@ Route::get('/group/delete/{id}', 'groupController@destroy');
 Route::get('/group/edit/{id}', 'groupController@edit');
 
 Route::put('/group/update/{id}', 'groupController@update');
+
+
+Route::post('/tasks/store/', 'tasksController@store');
+
+Route::get('/tasks/delete/{id}', 'tasksController@destroy');
