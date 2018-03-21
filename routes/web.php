@@ -28,4 +28,12 @@ Route::put('/group/update/{id}', 'groupController@update');
 
 Route::post('/tasks/store/', 'tasksController@store');
 
+Route::get('/tasks/edit/{id}', 'tasksController@edit');
+
+Route::put('/tasks/update/{id}', 'tasksController@update');
+
 Route::get('/tasks/delete/{id}', 'tasksController@destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

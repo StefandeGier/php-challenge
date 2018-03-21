@@ -12,6 +12,17 @@
         {{ Session::get('flash_message_add') }}
     </div>
     @endif
+    @if(Session::has('flash_message_delete'))
+    <div style="background-color:green;">
+        {{ Session::get('flash_message_delete') }}
+    </div>
+    @endif
+
+    @if(Session::has('flash_message_update'))
+    <div style="background-color:green;">
+        {{ Session::get('flash_message_update') }}
+    </div>
+    @endif
     <h1>{{ $group->title }}</h1>
       <form action="{{url('/tasks/store')}}" method="post">
         @csrf
@@ -27,6 +38,8 @@
         <a href="{{ URL::to('tasks/edit/' . $task->id) }}">edit</a>
         <br>
       @endforeach
+
+      
 
   </body>
 </html>

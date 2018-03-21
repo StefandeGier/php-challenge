@@ -42,13 +42,27 @@ class tasksController extends Controller
 
     public function edit($id)
     {
-        //
+      $task = Tasks::findOrFail($id);
+
+      return view('tasks/edit',compact('task'));
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+      $task = Tasks::findOrFail($id);
+
+      $this->validate($request, [
+          'title' => 'required'
+      ]);
+
+      $input = $request->all();
+
+      $task->fill($input)->save();
+
+      Session::flash('flash_message_update', 'Task successfully updated!');
+
+      return redirect('/group/show/'.$task->group_id);
     }
 
 
@@ -56,13 +70,13 @@ class tasksController extends Controller
     {
       $task = Tasks::findOrFail($id);
 
-      $page_id = Tasks::where('id', $id)->pluck('group_id');
+      $page_id = Tasks::where('id', $id)->get()->first();
 
-      dd($page_id);
+      //dd($page_id['group_id']);
       $task->delete();
 
       Session::flash('flash_message_delete', 'Task successfully deleted!');
 
-      return redirect('/group/show/'.$page_id);
+      return redirect('/group/show/'.$page_id['group_id']);
     }
 }

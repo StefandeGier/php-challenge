@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>This is the Edit for groups</h1>
-
+    <a href="/">Terug</a>
     <form method="post" action="{{ URL::to('group/update/' . $group->id) }}" >
       @method('PUT')
       @csrf
